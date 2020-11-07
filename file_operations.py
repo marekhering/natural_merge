@@ -10,7 +10,7 @@ def save_to_file(file_dir, data):
         file.write(str(data) + '\n')
 
 
-def load_from_file(file_dir, left_bounds, right_bounds):
+def read_from_file(file_dir, left_bounds, right_bounds):
     with open(file_dir, 'r') as file:
         result = []
         for index, line in enumerate(file.readlines()):
