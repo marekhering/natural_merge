@@ -11,7 +11,7 @@ class Tape:
     def write_run(self, run):
         for record in run:
             save_to_file(self.directory, record.value)
-    
+
     @staticmethod
     def create_tapes():
         tapes = list()
@@ -19,4 +19,5 @@ class Tape:
         for type_number in range(TAPES_NUMBER):
             tape_directory = tapes_directory + "/tape" + str(type_number) + ".txt"
             new_tape = Tape(tape_directory)
+            tapes.append(new_tape)
         return tapes
