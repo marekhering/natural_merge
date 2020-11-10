@@ -1,4 +1,4 @@
-from natural_merge.file_operations import *
+from natural_merge.file_operations.file_operations import *
 from natural_merge.setup import *
 import random
 
