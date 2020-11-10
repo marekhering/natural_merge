@@ -4,40 +4,32 @@ from natural_merge.structures import Record, Tape
 
 def sort_file(file_dir):
 
-    input_dir = file_dir
-    tapes = Tape.create_tapes()
+    input_tape = Tape("Input", file_dir)
+    distribution_tapes = Tape.create_tapes()
 
-    print("Numbers")
-    print_file(input_dir)
+    input_tape.print()
 
-    distribution([input_dir], [tapes[0], tapes[1]])
-    print("TAPE 0")
-    print_file(tapes[0].directory)
-    print("TAPE 1")
-    print_file(tapes[1].directory)
-    merge([tapes[0], tapes[1]], tapes[2])
+    first_distribution(input_tape, [distribution_tapes[0], distribution_tapes[1]])
+
+    distribution_tapes[0].print()
+    distribution_tapes[1].print()
 
 
-def distribution(inputs, outputs):
+def first_distribution(input_tape, outputs_tapes):
     prev_record = None
 
-    in_index = 0
-    out_index = 0
     run = list()
-
-    in_len = len(inputs)
-    out_len = len(outputs)
-
-    record_indexes = [0] * in_len
+    out_index = 0
+    out_len = len(outputs_tapes)
 
     while True:
 
-        record = read_record(inputs[in_index], record_indexes[in_index])
-        record_indexes[in_index] += 1
-        in_index = (in_index + 1) % in_len
+        record = input_tape.read_record()
 
         if record is None:
-            outputs[out_index].write_run(run)
+            outputs_tapes[out_index].write_run(run)
+            for tape in outputs_tapes:
+                tape.buffer.save_to_file()
             break
 
         if prev_record is None:
@@ -46,16 +38,13 @@ def distribution(inputs, outputs):
             continue
 
         if record < prev_record:
-            outputs[out_index].write_run(run)
+            outputs_tapes[out_index].write_run(run)
             out_index = (out_index + 1) % out_len
             run = [record]
         else:
             run.append(record)
 
         prev_record = record
-
-def merge(inputs, outputs):
-    pass
 
 
 def read_record(file_dir, index):
