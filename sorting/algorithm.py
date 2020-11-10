@@ -1,4 +1,4 @@
-from natural_merge.file_operations import read_from_file, print_file
+from natural_merge.file_operations.file_operations import read_from_file, print_file
 from natural_merge.structures import Record, Tape
 
 

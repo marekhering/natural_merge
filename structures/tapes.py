@@ -1,4 +1,4 @@
-from natural_merge.file_operations import clear_file, save_to_file
+from natural_merge.file_operations.file_operations import clear_file, save_to_file
 
 TAPES_NUMBER = 4
 
