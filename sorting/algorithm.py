@@ -45,15 +45,3 @@ def first_distribution(input_tape, outputs_tapes):
             run.append(record)
 
         prev_record = record
-
-
-def read_record(file_dir, index):
-    # Temporary function
-    # TODO Block read
-    value = read_from_file(file_dir, index, index)
-    if value:
-        value = int(value[0])
-        return Record(value)
-    else:
-        return None
-
