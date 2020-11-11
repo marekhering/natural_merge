@@ -34,7 +34,7 @@ class RecordList(list):
 
         for index, record in enumerate(self):
             if record is not None and (min_val is None or record < min_val):
-                if higher_than is None or record > higher_than:
+                if higher_than is None or record >= higher_than:
                     min_val = record
                     min_ind = index
 

@@ -5,8 +5,6 @@ import random
 
 def generate_data(file_dir, numbers_amount):
 
-    clear_file(file_dir)
-
     for _ in range(numbers_amount):
         random_number = random.randint(0, NUMBER_LIMIT)
         save_to_file(file_dir, random_number)

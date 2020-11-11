@@ -1,14 +1,6 @@
-from natural_merge.generator import generate_data
-from natural_merge.sorting import sort_file
+from natural_merge.interface import Interface
 
 if __name__ == '__main__':
 
-    file_dir = "data/numbers.txt"
-    numbers_amount = 20
-
-
-
-    # generate_data(file_dir, numbers_amount)
-
-    sort_file(file_dir)
-
+    interface = Interface()
+    interface.run_menu()
