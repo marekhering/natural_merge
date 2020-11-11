@@ -12,5 +12,7 @@ def save_to_file(file_dir, data):
 
 def print_file(file_dir):
     with open(file_dir, 'r') as file:
+        print('[', end='')
         for line in file.readlines():
-            print(line, end='')
+            print(line[:2], end=' ')
+        print(']')
