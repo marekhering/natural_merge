@@ -10,19 +10,33 @@ class Tape:
         self.name = name
         self.directory = directory
         self.buffer = Buffer(directory, BUFFER_SIZE)
+        self.run_counter = 0
 
     def write_run(self, run):
+        self.run_counter += 1
         for record in run:
             self.buffer.write_record(record)
 
     def read_record(self):
         return self.buffer.read_record()
 
+    def get_number_of_runs(self):
+        return self.run_counter
+
+    def finish_read(self):
+        self.buffer.read_offset = 0
+
+    def finish_write(self):
+        self.buffer.save_to_file()
+
+
     def print(self):
         print(self.name)
         print_file(self.directory)
 
     def clear(self):
+        self.run_counter = 0
+
         clear_file(self.directory)
 
     @staticmethod
