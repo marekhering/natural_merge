@@ -1,7 +1,7 @@
 from pathlib import Path
 import time
 
-from natural_merge.file_operations.file_operations import print_file
+from natural_merge.file_operations.file_operations import print_file, save_to_file, clear_file
 from natural_merge.setup import *
 from natural_merge.sorting import sort_file
 from natural_merge.generator import generate_data
@@ -26,8 +26,9 @@ class Interface:
             print("2. Sort file")
             print("3. Add records from keyboard")
             print("4. Print input file")
-            print("5. Set new input file (" + self.input_directory + ")")
-            print("6. Change the parameters")
+            print("5. Clear input file")
+            print("6. Set new input file (" + self.input_directory + ")")
+            print("7. Change the parameters")
             print("0. Exit")
             print("Select an option number: ", end='')
 
@@ -46,6 +47,9 @@ class Interface:
                 print_file(self.input_directory)
                 print()
             elif choice == '5':
+                clear_file(self.input_directory)
+                print("Input file cleared")
+            elif choice == '6':
                 self.set_new_directory()
             elif choice == '0':
                 break
@@ -84,4 +88,24 @@ class Interface:
         print()
 
     def add_records(self):
-        pass
+        print("Enter new records")
+        print("After every record press 'Enter'")
+        print("Press 'q' and 'Enter' to quit")
+
+        counter = 0
+        while True:
+            print(str(counter) + ". Record: ", end='')
+            record = input()
+
+            if record == 'q':
+                print()
+                return
+
+            try:
+                record = int(record)
+            except(ValueError, TypeError):
+                print("Wrong record (must be integer or float)")
+                continue
+            counter += 1
+            save_to_file(self.input_directory, record)
+
