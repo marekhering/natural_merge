@@ -31,7 +31,7 @@ class Tape:
 
 
     def print(self):
-        print(self.name)
+        print(self.name, end=' ')
         print_file(self.directory)
 
     def clear(self):
