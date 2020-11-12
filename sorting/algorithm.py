@@ -17,7 +17,6 @@ def sort_file(file_dir):
     for tape in input_tapes:
         tape.print()
 
-
     while True:
         phase_counter += 1
         print("Phase:", phase_counter)
@@ -33,6 +32,7 @@ def sort_file(file_dir):
 
         input_tapes, output_tapes = swap(input_tapes, output_tapes)
 
+    print()
 
 def distribution(input_tapes, output_tapes):
     record_list = RecordList(len(input_tapes))

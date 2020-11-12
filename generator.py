@@ -6,5 +6,11 @@ import random
 def generate_data(file_dir, numbers_amount):
 
     for _ in range(numbers_amount):
-        random_number = random.randint(0, NUMBER_LIMIT)
+        number_type = random.randint(0, 1)
+        if number_type == 0:
+            random_number = random.randint(0, NUMBER_LIMIT)
+        else:
+            random_number = random.random() * NUMBER_LIMIT
+            random_number = round(random_number, DECIMAL_PLACES)
+
         save_to_file(file_dir, random_number)
