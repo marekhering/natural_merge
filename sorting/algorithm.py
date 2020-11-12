@@ -2,39 +2,60 @@ from natural_merge.sorting.structures import Tape, RecordList
 
 
 def sort_file(file_dir):
-    phase_counter = 0
+    phase_counter = 1
+    result_tape = None
 
     input_tape = Tape("Input", file_dir)
     distribution_tapes = Tape.create_tapes()
 
-    print("Phase:", phase_counter)
     input_tape.print()
-    distribution([input_tape], [distribution_tapes[0], distribution_tapes[1]])
+    number_of_readings, number_of_writings = distribution([input_tape], [distribution_tapes[0], distribution_tapes[1]])
 
     input_tapes = [distribution_tapes[0], distribution_tapes[1]]
     output_tapes = [distribution_tapes[2], distribution_tapes[3]]
 
+    print("Phase:", phase_counter)
     for tape in input_tapes:
         tape.print()
 
     while True:
-        phase_counter += 1
-        print("Phase:", phase_counter)
+        number_of_runs = [tape.get_number_of_runs() for tape in input_tapes]
+        if sum(number_of_runs) == 1:
+            result_tape = input_tapes[0]
+            break
 
-        distribution(input_tapes, output_tapes)
+        if output_tapes[0] == distribution_tapes[0]:
+            phase_counter += 1
+            print("Phase:", phase_counter)
+
+        n_read, n_write = distribution(input_tapes, output_tapes)
+        number_of_readings += n_read
+        number_of_writings += n_write
 
         for tape in output_tapes:
             tape.print()
 
-        number_of_runs = [tape.get_number_of_runs() for tape in output_tapes]
-        if sum(number_of_runs) == 1:
-            break
-
         input_tapes, output_tapes = swap(input_tapes, output_tapes)
 
+    copy_content(result_tape, input_tape)
+
+    print()
+    print("Sorting finished")
+    print("Copy content of tape to input file")
+    print("Sorted file: ", end='')
+    input_tape.print()
+    print()
+    print("Stats:")
+    print("Number of phases: ", phase_counter)
+    print("Number of readings: ", number_of_readings)
+    print("Number of writings: ", number_of_writings)
     print()
 
+
+
 def distribution(input_tapes, output_tapes):
+    number_of_readings = 0
+    number_of_writings = 0
     record_list = RecordList(len(input_tapes))
     prev_record = None
 
@@ -67,10 +88,28 @@ def distribution(input_tapes, output_tapes):
         prev_record = record
 
     for tape in input_tapes:
-        tape.finish_read()
+        number_of_readings += tape.finish_read()
 
     for tape in output_tapes:
-        tape.finish_write()
+        number_of_writings += tape.finish_write()
+
+    return number_of_readings, number_of_writings
+
+
+def copy_content(input_tape, output_tape):
+    output_tape.clear()
+    result_run = []
+
+    while True:
+
+        record = input_tape.read_record()
+        if record is None:
+            break
+
+        result_run.append(record)
+
+    output_tape.write_run(result_run)
+    output_tape.finish_write()
 
 
 def swap(a, b):

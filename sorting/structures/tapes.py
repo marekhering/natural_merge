@@ -29,11 +29,15 @@ class Tape:
         return self.run_counter
 
     def finish_read(self):
-        self.buffer.read_offset = 0
+        readings = self.buffer.readings
+        self.buffer.setup()
+        return readings
 
     def finish_write(self):
         self.buffer.save_to_file()
-
+        writings = self.buffer.writings
+        self.buffer.clear_counters()
+        return writings
 
     def print(self):
         print(self.name, end=' ')
@@ -41,7 +45,6 @@ class Tape:
 
     def clear(self):
         self.run_counter = 0
-
         clear_file(self.directory)
 
     @staticmethod
