@@ -28,7 +28,6 @@ class Interface:
             print("4. Print input file")
             print("5. Clear input file")
             print("6. Set new input file (" + self.input_directory + ")")
-            print("7. Change the parameters")
             print("0. Exit")
             print("Select an option number: ", end='')
 
@@ -101,11 +100,19 @@ class Interface:
                 print()
                 return
 
-            try:
-                record = int(record)
-            except(ValueError, TypeError):
-                print("Wrong record (must be integer or float)")
-                continue
+            if '.' in record:
+                try:
+                    record = float(record)
+                except(ValueError, TypeError):
+                    print("Wrong record (must be integer or float)")
+                    continue
+            else:
+                try:
+                    record = int(record)
+                except(ValueError, TypeError):
+                    print("Wrong record (must be integer or float)")
+                    continue
+
             counter += 1
             save_to_file(self.input_directory, record)
 
