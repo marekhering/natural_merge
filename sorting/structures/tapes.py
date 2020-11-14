@@ -16,7 +16,7 @@ class Tape:
     def write_run(self, run):
         self.run_counter += 1
         for record in run:
-            self.buffer.write_record(record.value)
+            self.buffer.write_number(record.value)
 
     def read_record(self):
         number = self.buffer.read_number()

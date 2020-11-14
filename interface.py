@@ -48,15 +48,18 @@ class Interface:
             elif choice == '5':
                 clear_file(self.input_directory)
                 print("Input file cleared")
+                print()
             elif choice == '6':
                 self.set_new_directory()
             elif choice == '0':
                 break
             else:
                 print("Wrong option")
+                print()
 
     def sort(self):
         sort_file(self.input_directory)
+
 
     def generate(self):
         print("Enter numbers of records: ", end='')
@@ -115,4 +118,3 @@ class Interface:
 
             counter += 1
             save_to_file(self.input_directory, record)
-

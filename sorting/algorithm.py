@@ -3,13 +3,15 @@ from natural_merge.sorting.structures import Tape, RecordList
 
 def sort_file(file_dir):
     phase_counter = 1
-    result_tape = None
 
     input_tape = Tape("Input", file_dir)
     distribution_tapes = Tape.create_tapes()
 
     input_tape.print()
-    number_of_readings, number_of_writings = distribution([input_tape], [distribution_tapes[0], distribution_tapes[1]])
+    result_numbers = distribution([input_tape], [distribution_tapes[0], distribution_tapes[1]])
+    number_of_readings, number_of_writings, number_of_loaded_runs = result_numbers
+
+    print("Number of runs in input:", number_of_loaded_runs)
 
     input_tapes = [distribution_tapes[0], distribution_tapes[1]]
     output_tapes = [distribution_tapes[2], distribution_tapes[3]]
@@ -28,7 +30,7 @@ def sort_file(file_dir):
             phase_counter += 1
             print("Phase:", phase_counter)
 
-        n_read, n_write = distribution(input_tapes, output_tapes)
+        n_read, n_write, _ = distribution(input_tapes, output_tapes)
         number_of_readings += n_read
         number_of_writings += n_write
 
@@ -52,7 +54,6 @@ def sort_file(file_dir):
     print()
 
 
-
 def distribution(input_tapes, output_tapes):
     number_of_readings = 0
     number_of_writings = 0
@@ -60,6 +61,7 @@ def distribution(input_tapes, output_tapes):
     prev_record = None
 
     run = list()
+    number_of_loaded_runs = 0
     out_index = 0
     out_len = len(output_tapes)
 
@@ -84,6 +86,7 @@ def distribution(input_tapes, output_tapes):
             run = [record]
         else:
             run.append(record)
+            number_of_loaded_runs += 1
 
         prev_record = record
 
@@ -93,7 +96,7 @@ def distribution(input_tapes, output_tapes):
     for tape in output_tapes:
         number_of_writings += tape.finish_write()
 
-    return number_of_readings, number_of_writings
+    return number_of_readings, number_of_writings, number_of_loaded_runs
 
 
 def copy_content(input_tape, output_tape):

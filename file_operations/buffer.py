@@ -18,7 +18,7 @@ class Buffer(list):
         self.string_cast = self.string_cast[(len(str(number)) + 1):]
         return number
 
-    def write_record(self, record):
+    def write_number(self, record):
         if len(self.to_string(additional_records=[record])) > self.size:
             self.save_to_file()
         self.append(record)
